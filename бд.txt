@@ -1,0 +1,121 @@
+CREATE DATABASE ShoeStoreKol;
+GO
+
+USE ShoeStoreKol;
+GO
+
+-- Роли
+CREATE TABLE Roles (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Пользователи
+CREATE TABLE Users (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    FullName NVARCHAR(200) NOT NULL,
+    Login NVARCHAR(100) NOT NULL,
+    Password NVARCHAR(100) NOT NULL,
+    [Role] INT NOT NULL,
+
+    CONSTRAINT FK_Users_Roles
+        FOREIGN KEY ([Role]) REFERENCES Roles(Id)
+        ON DELETE CASCADE
+);
+GO
+
+-- Производители
+CREATE TABLE Manufacturers (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL
+);
+GO
+
+-- Категории
+CREATE TABLE Categories (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL
+);
+GO
+
+-- Поставщики
+CREATE TABLE Suppliers (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL
+);
+GO
+
+-- Пункты выдачи
+CREATE TABLE PickupPoints (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Address NVARCHAR(200) NOT NULL
+);
+GO
+
+-- Товары
+CREATE TABLE Products (
+    Article NVARCHAR(100) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Unit NVARCHAR(100) NOT NULL,
+    Price DECIMAL(18,2) NOT NULL,
+    Discount INT NOT NULL DEFAULT 0,
+    StockQuantity INT NOT NULL DEFAULT 0,
+    Description NVARCHAR(MAX) NULL,
+    ImagePath NVARCHAR(200) NULL,
+
+    CategoryId INT NULL,
+    SupplierId INT NULL,
+    ManufacturerId INT NULL,
+
+    CONSTRAINT FK_Products_Categories
+        FOREIGN KEY (CategoryId) REFERENCES Categories(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_Products_Suppliers
+        FOREIGN KEY (SupplierId) REFERENCES Suppliers(Id)
+        ON DELETE SET NULL,
+
+    CONSTRAINT FK_Products_Manufacturers
+        FOREIGN KEY (ManufacturerId) REFERENCES Manufacturers(Id)
+        ON DELETE SET NULL
+);
+GO
+
+-- Заказы
+CREATE TABLE Orders (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    OrderDate DATETIME2(7) NOT NULL,
+    DeliveryDate DATETIME2(7) NULL,
+    PickupPointId INT NOT NULL,
+    UserId INT NOT NULL,
+    Code NVARCHAR(12) NOT NULL,
+    Status NVARCHAR(100) NOT NULL,
+
+    CONSTRAINT FK_Orders_Users
+        FOREIGN KEY (UserId) REFERENCES Users(Id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_Orders_PickupPoints
+        FOREIGN KEY (PickupPointId) REFERENCES PickupPoints(Id)
+        ON DELETE CASCADE
+);
+GO
+
+-- Состав заказа
+-- Через эту таблицу Orders и Products связаны многие-ко-многим
+CREATE TABLE OrderItems (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    OrderId INT NOT NULL,
+    ProductArticle NVARCHAR(100) NOT NULL,
+    Quantity INT NOT NULL,
+
+    CONSTRAINT FK_OrderItems_Orders
+        FOREIGN KEY (OrderId) REFERENCES Orders(Id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT FK_OrderItems_Products
+        FOREIGN KEY (ProductArticle) REFERENCES Products(Article)
+        ON DELETE CASCADE
+);
+GO
