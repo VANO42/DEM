@@ -1,0 +1,265 @@
+Roles (Id, Name)
+Users (Id, FullName, Login, Password, RoleId)
+PickupPoints (Id, Address)
+Categories (Id, Name)
+Manufacturers (Id, Name)
+Suppliers (Id, Name)
+Products (Article, Name, Unit, Price, Discount, StockQuantity, Description, ImagePath, CategoryId, SupplierId, ManufacturerId)
+Orders (Id, OrderDate, DeliveryDate, PickupPointId, UserId, Code, Status)
+OrderItems (Id, OrderId, ProductArticle, Quantity)
+Для магазина игрушек можно заполнить так:
+Roles
+Id
+Name
+1
+Администратор
+2
+Менеджер
+3
+Покупатель
+
+
+⸻
+
+
+Users
+Id
+FullName
+Login
+Password
+RoleId
+1
+Иванов Иван Иванович
+admin
+admin123
+1
+2
+Петров Петр Сергеевич
+manager
+manager123
+2
+3
+Сидорова Анна Викторовна
+anna
+anna123
+3
+4
+Кузнецов Максим Олегович
+max
+max123
+3
+
+
+⸻
+
+
+PickupPoints
+Id
+Address
+1
+г. Москва, ул. Ленина, д. 10
+2
+г. Москва, пр-т Мира, д. 25
+3
+г. Москва, ул. Гагарина, д. 7
+
+
+⸻
+
+
+Categories
+Id
+Name
+1
+Конструкторы
+2
+Куклы
+3
+Машинки
+4
+Настольные игры
+5
+Мягкие игрушки
+
+
+⸻
+
+
+Manufacturers
+Id
+Name
+1
+LEGO
+2
+Mattel
+3
+Hasbro
+4
+Simba Toys
+5
+Полесье
+
+
+⸻
+
+
+Suppliers
+Id
+Name
+1
+ООО ИгрушкаТрейд
+2
+ООО Мир Детства
+3
+ООО Детский Маркет
+
+
+⸻
+
+
+Products
+Article
+Name
+Unit
+Price
+Discount
+StockQuantity
+Description
+ImagePath
+CategoryId
+SupplierId
+ManufacturerId
+TOY001
+LEGO City Полицейская машина
+шт
+2499.00
+10
+25
+Конструктор LEGO City
+lego_city.jpg
+1
+1
+1
+TOY002
+Барби Модница
+шт
+1899.00
+5
+18
+Кукла Барби
+barbie.jpg
+2
+2
+2
+TOY003
+Hot Wheels Спорткар
+шт
+499.00
+0
+50
+Металлическая машинка
+hotwheels.jpg
+3
+1
+2
+TOY004
+Монополия
+шт
+2199.00
+15
+12
+Настольная игра
+monopoly.jpg
+4
+3
+3
+TOY005
+Плюшевый медведь
+шт
+999.00
+20
+30
+Мягкая игрушка
+bear.jpg
+5
+2
+4
+TOY006
+Конструктор Полесье
+шт
+1299.00
+0
+40
+Детский конструктор
+polesie.jpg
+1
+3
+5
+
+
+⸻
+
+
+Orders
+Id
+OrderDate
+DeliveryDate
+PickupPointId
+UserId
+Code
+Status
+1
+2025-05-01
+2025-05-03
+1
+3
+A123
+Выдан
+2
+2025-05-05
+2025-05-07
+2
+4
+B456
+Готов к выдаче
+3
+2025-05-10
+2025-05-12
+3
+3
+C789
+В обработке
+
+
+⸻
+
+
+OrderItems
+Id
+OrderId
+ProductArticle
+Quantity
+1
+1
+TOY001
+1
+2
+1
+TOY003
+2
+3
+2
+TOY004
+1
+4
+2
+TOY005
+1
+5
+3
+TOY002
+2
+6
+3
+TOY006
+1
